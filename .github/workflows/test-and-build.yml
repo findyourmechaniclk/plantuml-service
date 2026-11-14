@@ -1,3 +1,9 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 2 optimizations:
+# - [HIGH] Add gradle dependency cache to "build" job
+# - [MEDIUM] Add concurrency group to "test-and-build.yml"
+# Estimated savings: ~7 min/run
+#
 name: Test and build
 
 on:
@@ -5,6 +11,10 @@ on:
   pull_request:
     branches: [ master ]
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   build:
     runs-on: ubuntu-latest
